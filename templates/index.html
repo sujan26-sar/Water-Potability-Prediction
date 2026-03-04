@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Water Quality Predictor</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body style="background: linear-gradient(135deg, #1e3c72, #2a5298); min-height: 100vh;">    
+
+<nav class="navbar navbar-dark bg-dark">
+    <a href="/logout" class="btn btn-danger btn-sm">Logout</a>
+    <div class="container">
+        <span class="navbar-brand mb-0 h1">💧 Intelligent Water Quality System</span>
+    </div>
+</nav>
+
+<div class="container mt-5">
+    <div class="card p-4 text-white"
+     style="background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;">
+        <h3 class="text-center mb-4">Enter Water Parameters</h3>
+
+        <form action="/predict" method="POST">
+            <div class="row">
+
+                <div class="col-md-6 mb-3">
+                    <label>pH</label>
+                    <input type="number" step="any" name="ph" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Hardness</label>
+                    <input type="number" step="any" name="Hardness" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Solids</label>
+                    <input type="number" step="any" name="Solids" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Chloramines</label>
+                    <input type="number" step="any" name="Chloramines" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Sulfate</label>
+                    <input type="number" step="any" name="Sulfate" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Conductivity</label>
+                    <input type="number" step="any" name="Conductivity" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Organic Carbon</label>
+                    <input type="number" step="any" name="Organic_carbon" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Trihalomethanes</label>
+                    <input type="number" step="any" name="Trihalomethanes" class="form-control" required>
+                </div>
+
+                <div class="col-md-6 mb-3">
+                    <label>Turbidity</label>
+                    <input type="number" step="any" name="Turbidity" class="form-control" required>
+                </div>
+
+            </div>
+
+            <button type="submit" class="btn w-100 mt-3"
+style="background: #00c6ff; border: none; font-weight: bold;">
+                Predict Water Quality
+            </button>
+        </form>
+
+        {% if error %}
+        <div class="alert alert-danger text-center mt-4">
+            {{ error }}
+        </div>
+        {% endif %}
+
+        {% if prediction_text %}
+<div class="alert text-center mt-4"
+     style="background: rgba(0,0,0,0.6); color: white; border-radius: 10px;">
+    <h5>{{ prediction_text }}</h5>
+    <p><strong>Confidence:</strong> {{ confidence }}%</p>
+    <p><strong>Risk Level:</strong> {{ risk }}</p>
+    <p><strong>Model Accuracy:</strong> {{ accuracy }}%</p>
+</div>
+
+<hr>
+<h5>Model Information</h5>
+<ul>
+    <li><strong>Algorithm:</strong> Decision Tree Classifier</li>
+    <li><strong>Training Dataset:</strong> Water Quality Dataset</li>
+    <li><strong>Features Used:</strong> 9 chemical parameters</li>
+    <li><strong>Model Accuracy:</strong> 92%</li>
+</ul>
+<hr>
+<h5>Feature Importance Analysis</h5>
+<img src="{{ url_for('static', filename='feature_importance.png') }}" 
+     class="img-fluid mt-3">
+
+{% endif %}
+
+    </div>
+</div>
+
+</body>
+</html>
