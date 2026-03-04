@@ -104,7 +104,7 @@ def predict():
             confidence = 85.0  # default fallback
 
         # Result interpretation
-        if prediction == 1:
+        if prediction == 0:
             prediction_text = "⚠️ Water is NOT Safe for Drinking"
             alert_color = "danger"
             risk = "High"
